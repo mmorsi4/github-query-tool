@@ -1,8 +1,8 @@
 # github-query-tool
 
-![screenshot placeholder](./screenshot.png)
+<img width="1917" height="849" alt="image" src="https://github.com/user-attachments/assets/0fa9c049-4861-4219-9502-35ff0d52d83d" />
 
-a minimal, cartoonish developer explorer and repository ai inspector built with next.js, langgraph, and cerebras.
+a minimal developer explorer and repository ai inspector built with next.js, langgraph, and cerebras.
 
 ## current architecture
 
@@ -15,8 +15,7 @@ a minimal, cartoonish developer explorer and repository ai inspector built with 
 
 ## core ai functionalities
 
--> profile summarizer: takes username, profile name, bio, location, join date, top 50 repos and extracted html from website/portfolio (in system prompt).
--> repo agent: takes a message with file structure, recent 20 commits, branch list and repo name. this agent has a tool that it can use, which allows it to read a specific file using its name and branch.
+- profile summarizer: takes username, profile name, bio, location, join date, top 50 repos and extracted html from website/portfolio.- repo agent: takes a message with file structure, recent 20 commits, branch list and repo name. this agent has a tool that it can use, which allows it to read a specific file using its name and branch.
 
 ## running locally
 
