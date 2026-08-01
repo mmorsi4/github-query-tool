@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# github-query-tool
 
-## Getting Started
+![screenshot placeholder](./screenshot.png)
 
-First, run the development server:
+a minimal, cartoonish developer explorer and repository ai inspector built with next.js, langgraph, and cerebras.
+
+## current architecture
+
+1. typescript frontend
+2. langchain / langgraph
+3. data persists on local storage
+4. deployed on vercel free tier
+5. tested on a locally hosted model (qwen 3.6 27b)
+6. deployed using gemma-4-31b through cerebras, which may rate-limit frequently.
+
+## core ai functionalities
+
+-> profile summarizer: takes username, profile name, bio, location, join date, top 50 repos and extracted html from website/portfolio (in system prompt).
+-> repo agent: takes a message with file structure, recent 20 commits, branch list and repo name. this agent has a tool that it can use, which allows it to read a specific file using its name and branch.
+
+## running locally
+
+clone the repository and install dependencies:
+
+```bash
+npm install
+```
+
+create a `.env.local` file in the project root with your cerebras configuration:
+
+```env
+CEREBRAS_API_KEY=your_cerebras_api_key_here
+CEREBRAS_MODEL=gemma-4-31b
+```
+
+start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
