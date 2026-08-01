@@ -1,66 +1,59 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { SearchBar } from '@/components/SearchBar';
 
 export default function Home() {
+  const router = useRouter();
+  const [typedText, setTypedText] = useState('');
+  const fullTitle = 'github-query-tool';
+
+  useEffect(() => {
+    let currentIdx = 0;
+    const timer = setInterval(() => {
+      if (currentIdx <= fullTitle.length) {
+        setTypedText(fullTitle.slice(0, currentIdx));
+        currentIdx++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 90);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSearch = (username: string) => {
+    router.push(`/user/${encodeURIComponent(username)}`);
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="container" style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+      <div style={{ textAlign: 'center', marginBottom: '40px', maxWidth: '820px', width: '100%' }}>
+        <h1 className="hero-title">
+          <span>{typedText}</span>
+          <span className="blinking-cursor">|</span>
+        </h1>
+        <p style={{ color: '#444444', fontSize: '18px', fontWeight: 'bold' }}>
+          explore repositories, analytics, and compare developers.
+        </p>
+      </div>
+
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+        <SearchBar
+          placeholder="search username (e.g. mmorsi4)..."
+          onSubmit={handleSearch}
+          maxWidth="680px"
+          buttonText="GO"
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
+
+      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Link href="/compare" className="btn btn-secondary">
+          COMPARE DEVELOPERS
+        </Link>
+      </div>
     </div>
   );
 }
